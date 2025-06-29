@@ -1,4 +1,4 @@
-# 🌾 Crop Prediction Model
+# 🌾 Crop Prediction Model [YouTube Demo](https://youtu.be/xB0-W7MdBtk?si=fpjJACZA3oNHFUwr)
 
 A Machine Learning model that predicts the best suitable crop to grow based on soil and environmental conditions such as nitrogen, phosphorus, potassium, temperature, humidity, pH, and rainfall.
 
