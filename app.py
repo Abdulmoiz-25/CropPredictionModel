@@ -12,32 +12,25 @@ st.set_page_config(page_title="🌾 Crop Prediction App", layout="centered")
 
 # Function to add a blurred background image
 def add_bg():
-    st.markdown("""
+    file_ = open("background.jpg", "rb")
+    contents = file_.read()
+    encoded_string = base64.b64encode(contents).decode()
+    file_.close()
+    
+    st.markdown(
+        f"""
         <style>
-        .stApp {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0;
-            margin: 0;
-        }
-        .stApp::before {
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url("background.jpg");
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{encoded_string}");
             background-size: cover;
             background-position: center;
-            filter: blur(10px);
-            z-index: -1;
-        }
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }}
         </style>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
 
 add_bg()
 
@@ -48,7 +41,7 @@ st.markdown("""
         padding: 2rem;
         border-radius: 15px;
         max-width: 800px;
-        margin: auto;
+        margin: 2rem auto 1rem auto;
     }
 
     @media (max-width: 768px) {
@@ -63,12 +56,19 @@ st.markdown("""
         color: black !important;
     }
 
+    /* Make number input text white */
     input[type="number"] {
         color: white !important;
     }
 
+    /* Make Predict button text white */
     button[kind="primary"] {
         color: white !important;
+    }
+
+    /* Remove default top padding from Streamlit */
+    .block-container {
+        padding-top: 1rem !important;
     }
     </style>
 """, unsafe_allow_html=True)
