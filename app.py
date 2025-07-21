@@ -49,23 +49,15 @@ st.markdown("""
         border-radius: 15px;
         max-width: 800px;
         margin: 2rem auto 1rem auto;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         z-index: 1;
         position: relative;
     }
     .content-box h1, .content-box h2, .content-box h3, .content-box p, .content-box div {
     text-align: center !important;
-    color: #000000 !important;
-    text-shadow: 
-        -3px -3px 0 #ffffff,
-        3px -3px 0 #ffffff,
-        -3px 3px 0 #ffffff,
-        3px 3px 0 #ffffff,
-        -3px 0 0 #ffffff,
-        3px 0 0 #ffffff,
-        0 -3px 0 #ffffff,
-        0 3px 0 #ffffff;
-    font-weight: 900 !important;
-    font-size: 1.2em !important;
+    color: #2d5a27 !important;
+    font-weight: bold !important;
 }
     input[type="number"], .stNumberInput input {
         color: black !important;
