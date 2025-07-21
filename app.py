@@ -53,12 +53,12 @@ st.markdown("""
     position: relative;
 }
 h1, h2, h3, p, div, label {
-    text-align: right !important;
+    text-align: left !important;
     color: #228B22 !important;
     font-weight: bold !important;
 }
 input[type="number"], .stNumberInput input {
-    color: white !important;
+    color: black !important;
     background-color: white !important;
 }
 .block-container {
