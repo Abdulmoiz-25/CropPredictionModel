@@ -14,23 +14,27 @@ st.set_page_config(page_title="🌾 Crop Prediction App", layout="centered")
 def add_bg():
     st.markdown(f"""
         <style>
+        body {{
+            margin: 0;
+        }}
         .stApp {{
+            background: transparent;
+        }}
+        .blur-bg {{
             background: url("background.jpg") no-repeat center center fixed;
             background-size: cover;
-        }}
-        .stApp::before {{
-            content: "";
             position: fixed;
             top: 0;
             left: 0;
             height: 100%;
             width: 100%;
-            background: inherit;
-            filter: blur(10px);
+            filter: blur(8px);
             z-index: -1;
         }}
         </style>
+        <div class="blur-bg"></div>
     """, unsafe_allow_html=True)
+
 
 add_bg()
 
