@@ -55,10 +55,10 @@ st.markdown("""
         position: relative;
     }
     .content-box h1, .content-box h2, .content-box h3, .content-box p, .content-box div {
-    text-align: center !important;
-    color: #2d5a27 !important;
-    font-weight: bold !important;
-}
+        text-align: center !important;
+        color: #2d5a27 !important;
+        font-weight: bold !important;
+    }
     input[type="number"], .stNumberInput input {
         color: black !important;
     }
@@ -67,7 +67,7 @@ st.markdown("""
     }
     </style>""", unsafe_allow_html=True)
 
-# Start content box
+# Start content box and put ALL content inside
 st.markdown('<div class="content-box">', unsafe_allow_html=True)
 
 # Title and description
