@@ -1,76 +1,70 @@
 import streamlit as st
-import base64
 
-# Set page config
-st.set_page_config(page_title="Crop Prediction App", layout="centered")
-
-# Function to add styled background image
+# Function to add background with blur and dark overlay
 def add_bg():
-    with open("background.jpg", "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read()).decode()
-
     st.markdown(
         f"""
         <style>
         .stApp {{
+            background-image: url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1600&q=80");
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
             position: relative;
-            background: none;
         }}
 
         .stApp::before {{
             content: "";
-            background: url("data:image/jpg;base64,{encoded_string}") no-repeat center center fixed;
-            background-size: cover;
-            position: fixed;
+            position: absolute;
             top: 0;
             left: 0;
             height: 100%;
             width: 100%;
-            z-index: -2;
-            filter: blur(5px) brightness(0.5); /* Blur and darken */
+            background: rgba(0, 0, 0, 0.5);  /* dark overlay */
+            backdrop-filter: blur(8px);      /* blur effect */
+            z-index: -1;
         }}
 
-        /* Main container styling for visibility */
-        .main > div {{
-            background-color: rgba(255, 255, 255, 0.8);
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        .block-container {{
+            position: relative;
+            z-index: 1;
         }}
 
-        .stButton > button {{
-            background-color: #2ecc71;
+        .stButton>button {{
+            background-color: #4CAF50;
             color: white;
-            font-weight: bold;
-            border: none;
             border-radius: 8px;
             padding: 10px 20px;
-            font-size: 16px;
-        }}
-
-        .stButton > button:hover {{
-            background-color: #27ae60;
-            color: white;
+            border: none;
+            font-weight: bold;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
+# Add background styling
 add_bg()
 
-# App content
-st.markdown("<h1 style='text-align: center;'>🌾 Crop Prediction App</h1>", unsafe_allow_html=True)
+# App title and description
+st.title("🌾 Crop Recommendation System")
+st.markdown("Enter soil and climate details to predict the most suitable crop.")
 
-st.subheader("🔢 Enter Soil and Weather Details")
+# Input fields
+nitrogen = st.number_input("Nitrogen Level", min_value=0.0)
+phosphorus = st.number_input("Phosphorus Level", min_value=0.0)
+potassium = st.number_input("Potassium Level", min_value=0.0)
+temperature = st.number_input("Temperature (°C)", min_value=0.0)
+humidity = st.number_input("Humidity (%)", min_value=0.0)
+ph = st.number_input("pH Level", min_value=0.0)
+rainfall = st.number_input("Rainfall (mm)", min_value=0.0)
 
-N = st.number_input("Nitrogen (N)", min_value=0.0, step=1.0)
-P = st.number_input("Phosphorus (P)", min_value=0.0, step=1.0)
-K = st.number_input("Potassium (K)", min_value=0.0, step=1.0)
-temperature = st.number_input("Temperature (°C)", min_value=0.0, step=0.1)
-humidity = st.number_input("Humidity (%)", min_value=0.0, step=0.1)
-ph = st.number_input("pH", min_value=0.0, step=0.1)
-rainfall = st.number_input("Rainfall (mm)", min_value=0.0, step=0.1)
-
-if st.button("Predict"):
-    st.success("✅ Based on the input, suitable crop is: **Rice**")  # Replace with model prediction
+# Predict button
+if st.button("Predict Crop"):
+    # Dummy logic — replace with your trained model prediction
+    if nitrogen > 100 and rainfall > 100:
+        prediction = "Rice"
+    else:
+        prediction = "Wheat"
+    
+    st.success(f"✅ Recommended Crop: **{prediction}**")
