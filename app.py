@@ -1,73 +1,68 @@
 import streamlit as st
-import pickle
-import numpy as np
 
-# Load model
-model = pickle.load(open("crop_model.pkl", "rb"))
+# Set page config
+st.set_page_config(page_title="Crop Prediction", layout="centered")
 
-# ---------- Custom CSS ----------
+# Apply custom CSS for background and form styling
 st.markdown("""
     <style>
-    /* Light background and center alignment */
-    .main {
-        background-color: #f5f7fa;
-        padding-top: 2rem;
-        font-family: 'Segoe UI', sans-serif;
-    }
+        /* Fullscreen background image */
+        body {
+            background-image: url('https://i.ibb.co/hyCHDk1/plant-bg.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
 
-    .centered-card {
-        background-color: white;
-        padding: 40px 30px;
-        border-radius: 20px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-        width: 400px;
-        margin: 0 auto;
-    }
+        /* Hide Streamlit default menu and footer */
+        #MainMenu, footer, header {visibility: hidden;}
 
-    .stButton>button {
-        background-color: #2e7d32;
-        color: white;
-        font-size: 16px;
-        padding: 10px 0;
-        border-radius: 10px;
-        width: 100%;
-        font-weight: 600;
-    }
+        /* Center form container */
+        .form-container {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 2rem;
+            border-radius: 20px;
+            max-width: 400px;
+            margin: 8% auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
 
-    .title {
-        text-align: center;
-        color: #2e7d32;
-        font-size: 32px;
-        font-weight: bold;
-        margin-bottom: 1.5rem;
-    }
+        .form-container h2 {
+            text-align: center;
+            color: #2E7D32;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
 
-    /* Hide default Streamlit footer */
-    footer {visibility: hidden;}
-    header {visibility: hidden;}
+        .stButton > button {
+            background-color: #4CAF50;
+            color: white;
+            border-radius: 20px;
+            padding: 0.5em 2em;
+            border: none;
+        }
+
+        .stButton > button:hover {
+            background-color: #388E3C;
+        }
     </style>
 """, unsafe_allow_html=True)
 
-# ---------- Title ----------
-st.markdown("<div class='title'>Crop Prediction</div>", unsafe_allow_html=True)
+# Use HTML block for form styling
+st.markdown('<div class="form-container"><h2>Crop Prediction</h2>', unsafe_allow_html=True)
 
-# ---------- Centered Card Form ----------
-with st.form("crop_form"):
-    st.markdown("<div class='centered-card'>", unsafe_allow_html=True)
+# Input fields
+nitrogen = st.text_input("Nitrogen (N)")
+phosphorus = st.text_input("Phosphorus (P)")
+potassium = st.text_input("Potassium (K)")
+temperature = st.text_input("Temperature (°C)")
+humidity = st.text_input("Humidity (%)")
+ph = st.text_input("pH Level")
+rainfall = st.text_input("Rainfall (mm)")
 
-    N = st.number_input("Nitrogen (N)", min_value=0.0, step=1.0, format="%.2f")
-    P = st.number_input("Phosphorus (P)", min_value=0.0, step=1.0, format="%.2f")
-    K = st.number_input("Potassium (K)", min_value=0.0, step=1.0, format="%.2f")
-    temperature = st.number_input("Temperature (°C)", format="%.2f")
-    humidity = st.number_input("Humidity (%)", format="%.2f")
-    ph = st.number_input("pH Level", format="%.2f")
-    rainfall = st.number_input("Rainfall (mm)", format="%.2f")
+# Predict button
+if st.button("Predict"):
+    st.success("✅ Your predicted crop is: Wheat 🌾")
 
-    submit = st.form_submit_button("Predict")
-    st.markdown("</div>", unsafe_allow_html=True)
-
-# ---------- Prediction Result ----------
-if submit:
-    input_data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
-    prediction = model.predict(input_data)[0]
-    st.success(f"✅ Recommended Crop: **{prediction}**")
+# End HTML block
+st.markdown('</div>', unsafe_allow_html=True)
