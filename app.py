@@ -10,37 +10,28 @@ model = pickle.load(open('crop_model.pkl', 'rb'))
 # Set page config
 st.set_page_config(page_title="🌾 Crop Prediction App", layout="centered")
 
-# Function to add a blurred background image (local file)
+# Function to add a blurred background image
 def add_bg():
-    file_ = open("background.jpg", "rb")
-    contents = file_.read()
-    data_url = base64.b64encode(contents).decode("utf-8")
-    file_.close()
-    
-    st.markdown(
-        f"""
+    st.markdown("""
         <style>
-        .stApp {{
-            background-image: url("data:image/jpg;base64,{data_url}");
+        .stApp {
+            background-image: url("background.jpg");
             background-size: cover;
             background-position: center;
-            backdrop-filter: blur(6px);
-        }}
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
         </style>
-        """,
-        unsafe_allow_html=True
-    )
+    """, unsafe_allow_html=True)
 
 add_bg()
 
-# Style overrides
+# Add styling for the content box, input text, and button
 st.markdown("""
     <style>
     .content-box {
-        background-color: rgba(255, 255, 255, 0.8);
         padding: 2rem;
         border-radius: 15px;
-        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
         max-width: 800px;
         margin: 3rem auto;
     }
@@ -57,11 +48,13 @@ st.markdown("""
         color: black !important;
     }
 
-    input[type=number] {
+    /* Make number input text white */
+    input[type="number"] {
         color: white !important;
     }
 
-    button[kind="primary"] > div {
+    /* Make Predict button text white */
+    button[kind="primary"] {
         color: white !important;
     }
     </style>
