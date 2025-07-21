@@ -1,59 +1,31 @@
 import streamlit as st
 import base64
 
-# Set page config
-st.set_page_config(page_title="Crop Prediction App", layout="centered")
+# Set Streamlit page config
+st.set_page_config(page_title="Crop Predictor", layout="centered")
 
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as file:
-        encoded = base64.b64encode(file.read()).decode()
+# Function to set background image
+def set_bg(image_file):
+    with open(image_file, "rb") as img:
+        encoded = base64.b64encode(img.read()).decode()
     st.markdown(
         f"""
         <style>
-        /* Background image */
-        .stApp::before {{
-            content: "";
-            position: fixed;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 100%;
-            background: url("data:image/jpg;base64,{encoded}") no-repeat center center fixed;
+        .stApp {{
+            background-image: url("data:image/jpg;base64,{encoded}");
             background-size: cover;
-            filter: blur(8px) brightness(0.3);
-            z-index: -1;
-        }}
-
-        /* Main content box styling */
-        .main .block-container {{
-            background-color: rgba(255, 255, 255, 0.85);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 30px rgba(0,0,0,0.3);
-        }}
-
-        /* Button styling */
-        .stButton > button {{
-            background-color: #2ecc71;
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 16px;
-        }}
-
-        .stButton > button:hover {{
-            background-color: #27ae60;
+            background-position: center;
+            background-repeat: no-repeat;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-add_bg_from_local("background.jpg")
+# Set background (make sure this file exists in your project folder)
+set_bg("background.jpg")
 
-# App content
+# Your app content
 st.markdown("<h1 style='text-align: center;'>🌾 Crop Prediction App</h1>", unsafe_allow_html=True)
 st.subheader("🔢 Enter Soil and Weather Details")
 
