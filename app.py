@@ -1,13 +1,14 @@
 import streamlit as st
 import base64
 
-# Set Streamlit page config
-st.set_page_config(page_title="Crop Predictor", layout="centered")
+# Page config
+st.set_page_config(page_title="Crop Prediction", layout="centered")
 
-# Function to set background image
-def set_bg(image_file):
-    with open(image_file, "rb") as img:
-        encoded = base64.b64encode(img.read()).decode()
+# Set background image with blur effect
+def set_bg_blur(image_file):
+    with open(image_file, "rb") as f:
+        data = f.read()
+    encoded = base64.b64encode(data).decode()
     st.markdown(
         f"""
         <style>
@@ -16,16 +17,28 @@ def set_bg(image_file):
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
+            position: relative;
+        }}
+        .blur-wrapper {{
+            backdrop-filter: blur(8px);
+            background-color: rgba(255, 255, 255, 0.2);  /* subtle overlay for better contrast */
+            padding: 3rem;
+            border-radius: 20px;
+            max-width: 700px;
+            margin: auto;
+            margin-top: 50px;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-# Set background (make sure this file exists in your project folder)
-set_bg("background.jpg")
+# Apply blur background
+set_bg_blur("background.jpg")
 
-# Your app content
+# App content inside blur wrapper
+st.markdown("<div class='blur-wrapper'>", unsafe_allow_html=True)
+
 st.markdown("<h1 style='text-align: center;'>🌾 Crop Prediction App</h1>", unsafe_allow_html=True)
 st.subheader("🔢 Enter Soil and Weather Details")
 
@@ -39,3 +52,5 @@ rainfall = st.number_input("Rainfall (mm)", min_value=0.0, step=0.1)
 
 if st.button("Predict"):
     st.success("✅ Based on the input, suitable crop is: **Rice**")
+
+st.markdown("</div>", unsafe_allow_html=True)
