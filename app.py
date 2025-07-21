@@ -1,43 +1,39 @@
 import streamlit as st
 import base64
 
-# Page config
-st.set_page_config(page_title="Crop Prediction", layout="centered")
+st.set_page_config(page_title="Crop Predictor", layout="centered")
 
-# Set background image with blur effect
-def set_bg_blur(image_file):
+def set_blurred_background(image_file):
     with open(image_file, "rb") as f:
-        data = f.read()
-    encoded = base64.b64encode(data).decode()
+        image_data = f.read()
+    encoded = base64.b64encode(image_data).decode()
+    
     st.markdown(
         f"""
         <style>
         .stApp {{
-            background-image: url("data:image/jpg;base64,{encoded}");
+            background: url("data:image/png;base64,{encoded}") no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            position: relative;
         }}
-        .blur-wrapper {{
-            backdrop-filter: blur(8px);
-            background-color: rgba(255, 255, 255, 0.2);  /* subtle overlay for better contrast */
+
+        .blur-container {{
+            background-color: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             padding: 3rem;
-            border-radius: 20px;
+            margin: 5% auto;
+            border-radius: 15px;
             max-width: 700px;
-            margin: auto;
-            margin-top: 50px;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-# Apply blur background
-set_bg_blur("background.jpg")
+set_blurred_background("background.jpg")
 
-# App content inside blur wrapper
-st.markdown("<div class='blur-wrapper'>", unsafe_allow_html=True)
+# Place content in blur wrapper
+st.markdown("<div class='blur-container'>", unsafe_allow_html=True)
 
 st.markdown("<h1 style='text-align: center;'>🌾 Crop Prediction App</h1>", unsafe_allow_html=True)
 st.subheader("🔢 Enter Soil and Weather Details")
