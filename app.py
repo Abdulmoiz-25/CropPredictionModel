@@ -44,31 +44,29 @@ add_blurred_bg("background.jpg")
 # Additional styling for content visibility
 st.markdown("""
     <style>
-    .content-box {
-        padding: 2rem;
-        border-radius: 15px;
-        max-width: 800px;
-        margin: 2rem auto 1rem auto;
-        background-color: rgba(255, 255, 255, 0.9);
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        z-index: 1;
-        position: relative;
-    }
-    .content-box h1, .content-box h2, .content-box h3, .content-box p, .content-box div {
-        text-align: center !important;
-        color: #228B22 !important;
-        font-weight: bold !important;
-    }
-    input[type="number"], .stNumberInput input {
-        color: black !important;
-    }
-    .block-container {
-        padding-top: 1rem !important;
-    }
-    </style>""", unsafe_allow_html=True)
+.content-box {
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 800px;
+    margin: 2rem auto 1rem auto;
+    z-index: 1;
+    position: relative;
+}
+h1, h2, h3, p, div, label {
+    text-align: center !important;
+    color: #228B22 !important;
+    font-weight: bold !important;
+}
+input[type="number"], .stNumberInput input {
+    color: black !important;
+}
+.block-container {
+    padding-top: 1rem !important;
+}
+</style>""", unsafe_allow_html=True)
 
 # Start content box and put ALL content inside
-st.markdown('<div class="content-box">', unsafe_allow_html=True)
+#st.markdown('<div class="content-box">', unsafe_allow_html=True)
 
 # Title and description
 st.title("🌾 Crop Prediction App")
@@ -91,4 +89,4 @@ if st.button("🌿 Predict Crop"):
     st.success(f"✅ Recommended Crop: **{prediction[0]}**")
 
 # End content box
-st.markdown('</div>', unsafe_allow_html=True)
+#st.markdown('</div>', unsafe_allow_html=True)
