@@ -1,57 +1,66 @@
 import streamlit as st
 import base64
 
-# Page config
-st.set_page_config(page_title="Crop Prediction", layout="centered")
+# Set page config
+st.set_page_config(page_title="Crop Prediction App", layout="centered")
 
-# Add background from local file
+# Function to add background image
 def add_bg():
     with open("background.jpg", "rb") as file:
         encoded = base64.b64encode(file.read()).decode()
-    st.markdown(
-        f"""
-        <style>
-        .stApp {{
-            background-image: url("data:image/jpg;base64,{encoded}");
-            background-size: cover;
-            background-attachment: fixed;
-            background-position: center;
-        }}
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background-image: url("data:image/jpg;base64,{encoded}");
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+                padding: 2rem;
+            }}
 
-add_bg()  # ⬅️ Call the function
+            .stButton > button {{
+                background-color: #2ecc71;
+                color: white;
+                font-weight: bold;
+                border: none;
+                border-radius: 8px;
+                padding: 10px 20px;
+                font-size: 16px;
+            }}
 
-# Main title
-st.markdown("<h1 style='text-align:center; color:white;'>🌾 Crop Prediction</h1>", unsafe_allow_html=True)
+            .stButton > button:hover {{
+                background-color: #27ae60;
+                color: white;
+            }}
 
-# Form input
-with st.form("form"):
-    N = st.number_input("Nitrogen", min_value=0)
-    P = st.number_input("Phosphorus", min_value=0)
-    K = st.number_input("Potassium", min_value=0)
-    temp = st.number_input("Temperature")
-    humidity = st.number_input("Humidity")
-    ph = st.number_input("pH")
-    rainfall = st.number_input("Rainfall")
-    submit = st.form_submit_button("Predict")
+            .stNumberInput input {{
+                background-color: white;
+                color: black;
+                border-radius: 5px;
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
 
-# Output result
-if submit:
-    st.success("✅ Predicted Crop: Rice")
+add_bg()
 
-# Style the button green
-st.markdown("""
-    <style>
-    .stButton > button {
-        background-color: #28a745;
-        color: white;
-        font-size: 18px;
-        border-radius: 10px;
-        padding: 10px 20px;
-    }
-    header, footer {visibility: hidden;}
-    </style>
-""", unsafe_allow_html=True)
+# App title
+st.markdown("<h1 style='text-align: center; color: white;'>🌾 Crop Prediction App</h1>", unsafe_allow_html=True)
+
+# Input fields
+st.subheader("🔢 Enter Soil and Weather Details")
+
+N = st.number_input("Nitrogen (N)", min_value=0.0, step=1.0)
+P = st.number_input("Phosphorus (P)", min_value=0.0, step=1.0)
+K = st.number_input("Potassium (K)", min_value=0.0, step=1.0)
+temperature = st.number_input("Temperature (°C)", min_value=0.0, step=0.1)
+humidity = st.number_input("Humidity (%)", min_value=0.0, step=0.1)
+ph = st.number_input("pH", min_value=0.0, step=0.1)
+rainfall = st.number_input("Rainfall (mm)", min_value=0.0, step=0.1)
+
+# Predict button
+if st.button("Predict"):
+    st.success("✅ Based on the input, suitable crop is: **Rice**")  # Replace with your model’s prediction
+
