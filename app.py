@@ -10,7 +10,7 @@ model = pickle.load(open('crop_model.pkl', 'rb'))
 # Page config
 st.set_page_config(page_title="🌾 Crop Prediction App", layout="centered")
 
-# Add blurred background image
+# Add blurred background image using inline CSS with correct z-index
 def add_blurred_bg(image_file):
     with open(image_file, "rb") as image:
         encoded = base64.b64encode(image.read()).decode()
@@ -18,18 +18,18 @@ def add_blurred_bg(image_file):
         f"""
         <style>
         .stApp {{
-            position: relative;
+            background: none;
         }}
         .bg-blur {{
             background-image: url("data:image/jpg;base64,{encoded}");
             background-size: cover;
             background-position: center;
-            filter: blur(8px);
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
+            filter: blur(8px);
             z-index: -1;
         }}
         </style>
@@ -38,9 +38,10 @@ def add_blurred_bg(image_file):
         unsafe_allow_html=True
     )
 
+# Call function to display background
 add_blurred_bg("background.jpg")
 
-# Additional styling
+# Additional styling for content visibility
 st.markdown("""
     <style>
     .content-box {
@@ -48,15 +49,9 @@ st.markdown("""
         border-radius: 15px;
         max-width: 800px;
         margin: 2rem auto 1rem auto;
-        background-color: rgba(255, 255, 255, 0.85);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    @media (max-width: 768px) {
-        .content-box {
-            padding: 1.2rem;
-            margin: 1rem;
-        }
+        background-color: rgba(255, 255, 255, 0.88);
+        z-index: 1;
+        position: relative;
     }
 
     .content-box h1, .content-box h2, .content-box h3, .content-box p, .content-box div {
@@ -64,9 +59,9 @@ st.markdown("""
         color: black !important;
     }
 
-    label, input, .stNumberInput, .stButton button {{
+    input[type="number"], .stNumberInput input {
         color: black !important;
-    }}
+    }
 
     .block-container {
         padding-top: 1rem !important;
@@ -77,13 +72,12 @@ st.markdown("""
 # Start content box
 st.markdown('<div class="content-box">', unsafe_allow_html=True)
 
-# App title
+# Title and description
 st.title("🌾 Crop Prediction App")
 st.markdown("Predict the most suitable crop based on soil and weather conditions.")
 
-# Input
+# Inputs
 st.subheader("📋 Enter the following parameters:")
-
 N = st.number_input("Nitrogen (N)", min_value=0.0, step=1.0)
 P = st.number_input("Phosphorus (P)", min_value=0.0, step=1.0)
 K = st.number_input("Potassium (K)", min_value=0.0, step=1.0)
@@ -92,7 +86,7 @@ humidity = st.number_input("Humidity (%)", min_value=0.0, step=0.1)
 ph = st.number_input("Soil pH", min_value=0.0, step=0.1)
 rainfall = st.number_input("Rainfall (mm)", min_value=0.0, step=0.1)
 
-# Prediction
+# Prediction button
 if st.button("🌿 Predict Crop"):
     input_data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
     prediction = model.predict(input_data)
