@@ -1,23 +1,25 @@
 import streamlit as st
+import base64
 import numpy as np
+import pandas as pd
 import pickle
-from PIL import Image
 
 # Load your model
-model = pickle.load(open('crop_model.pkl', 'rb'))  # updated filename
+model = pickle.load(open('crop_model.pkl', 'rb'))  # corrected filename
 
-# Page configuration
+# Set page config
 st.set_page_config(page_title="🌾 Crop Prediction App", layout="centered")
 
-# Add custom background image from local file
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as img_file:
-        encoded_string = img_file.read()
+# Function to add a local background image via base64
+def add_local_bg(file_path):
+    with open(file_path, "rb") as f:
+        data = f.read()
+    encoded = base64.b64encode(data).decode()
     st.markdown(
         f"""
         <style>
         .stApp {{
-            background-image: url("data:image/jpg;base64,{encoded_string.decode('latin1')}");
+            background-image: url("data:image/jpg;base64,{encoded}");
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -27,43 +29,63 @@ def add_bg_from_local(image_file):
         unsafe_allow_html=True
     )
 
-add_bg_from_local("background.jpg")
+add_local_bg("background.jpg")  # ensure this image is in the same folder
 
-# Custom styles (text shadow, color matching)
+# Custom styling (adjusted text color for visibility on dark image)
 st.markdown("""
     <style>
-    h1, h2, h3, .stMarkdown, .stButton>button, .stNumberInput label {
-        color: #f7f7f7 !important;
-        text-shadow: 1px 1px 2px #000000;
+    .content-box {
+        background-color: rgba(0, 0, 0, 0);  /* Transparent box */
+        padding: 2rem;
+        border-radius: 15px;
+        color: #ffffff;
+        max-width: 800px;
+        margin: 3rem auto;
     }
 
-    .stNumberInput input {
-        background-color: rgba(255, 255, 255, 0.85);
-        border-radius: 8px;
-        color: #000000;
+    @media (max-width: 768px) {
+        .content-box {
+            padding: 1.2rem;
+            margin: 1rem;
+        }
     }
 
-    .stButton>button {
-        background-color: #228B22;
+    .content-box h1, .content-box h2, .content-box h3, .content-box p, .content-box div {
+        text-align: center !important;
+        color: #f0f0f0 !important;
+    }
+
+    label, .st-bb, .st-c3 {
+        color: #ffffff !important;
+    }
+
+    .stNumberInput > div > input {
+        background-color: rgba(255,255,255,0.2);
         color: white;
-        border-radius: 10px;
-        padding: 0.5rem 1.2rem;
-        border: none;
-        font-weight: bold;
-        transition: 0.3s;
     }
 
-    .stButton>button:hover {
-        background-color: #1e7b1e;
-        transform: scale(1.05);
+    .stButton > button {
+        background-color: #28a745;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 10px 20px;
+    }
+
+    .stButton > button:hover {
+        background-color: #218838;
     }
     </style>
 """, unsafe_allow_html=True)
 
-# App UI
-st.title("🌾 Crop Prediction App")
-st.markdown("### Predict the most suitable crop based on soil and weather conditions.")
+# Start content box
+st.markdown('<div class="content-box">', unsafe_allow_html=True)
 
+# App title and intro
+st.title("🌾 Crop Prediction App")
+st.markdown("Predict the most suitable crop based on soil and weather conditions.")
+
+# Input fields
 st.subheader("📋 Enter the following parameters:")
 
 N = st.number_input("Nitrogen (N)", min_value=0.0, step=1.0)
@@ -79,3 +101,6 @@ if st.button("🌿 Predict Crop"):
     input_data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
     prediction = model.predict(input_data)
     st.success(f"✅ Recommended Crop: **{prediction[0]}**")
+
+# End content box
+st.markdown('</div>', unsafe_allow_html=True)
