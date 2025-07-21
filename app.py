@@ -54,14 +54,18 @@ st.markdown("""
     }
     .content-box h1, .content-box h2, .content-box h3, .content-box p, .content-box div {
     text-align: center !important;
-    color: black !important;
+    color: #000000 !important;
     text-shadow: 
-        -2px -2px 0 #fff,
-        2px -2px 0 #fff,
-        -2px 2px 0 #fff,
-        2px 2px 0 #fff,
-        0 0 10px rgba(255, 255, 255, 0.8);
-    font-weight: bold !important;
+        -3px -3px 0 #ffffff,
+        3px -3px 0 #ffffff,
+        -3px 3px 0 #ffffff,
+        3px 3px 0 #ffffff,
+        -3px 0 0 #ffffff,
+        3px 0 0 #ffffff,
+        0 -3px 0 #ffffff,
+        0 3px 0 #ffffff;
+    font-weight: 900 !important;
+    font-size: 1.2em !important;
 }
     input[type="number"], .stNumberInput input {
         color: black !important;
