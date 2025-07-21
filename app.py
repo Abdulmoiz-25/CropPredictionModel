@@ -35,9 +35,6 @@ def add_bg():
         <div class="blur-bg"></div>
     """, unsafe_allow_html=True)
 
-
-add_bg()
-
 # Add styling for the content box, input text, and button
 st.markdown("""
     <style>
