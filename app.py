@@ -12,25 +12,25 @@ st.set_page_config(page_title="🌾 Crop Prediction App", layout="centered")
 
 # Function to add a blurred background image
 def add_bg():
-    file_ = open("background.jpg", "rb")
-    contents = file_.read()
-    encoded_string = base64.b64encode(contents).decode()
-    file_.close()
-    
-    st.markdown(
-        f"""
+    st.markdown(f"""
         <style>
         .stApp {{
-            background-image: url("data:image/jpg;base64,{encoded_string}");
+            background: url("background.jpg") no-repeat center center fixed;
             background-size: cover;
-            background-position: center;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+        }}
+        .stApp::before {{
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 100%;
+            background: inherit;
+            filter: blur(10px);
+            z-index: -1;
         }}
         </style>
-        """,
-        unsafe_allow_html=True
-    )
+    """, unsafe_allow_html=True)
 
 add_bg()
 
