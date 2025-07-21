@@ -5,16 +5,15 @@ import pandas as pd
 import pickle
 
 # Load your model
-model = pickle.load(open('crop_model.pkl', 'rb'))  # corrected filename
+model = pickle.load(open('crop_model.pkl', 'rb'))
 
 # Set page config
 st.set_page_config(page_title="🌾 Crop Prediction App", layout="centered")
 
-# Function to add a local background image via base64
-def add_local_bg(file_path):
-    with open(file_path, "rb") as f:
-        data = f.read()
-    encoded = base64.b64encode(data).decode()
+# Function to add a local background image with blur
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as file:
+        encoded = base64.b64encode(file.read()).decode()
     st.markdown(
         f"""
         <style>
@@ -22,25 +21,27 @@ def add_local_bg(file_path):
             background-image: url("data:image/jpg;base64,{encoded}");
             background-size: cover;
             background-position: center;
-            background-attachment: fixed;
+            backdrop-filter: blur(6px);
+            color: black !important;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-add_local_bg("background.jpg")  # ensure this image is in the same folder
+add_bg_from_local("background.jpg")  # Make sure this file is in the same folder
 
-# Custom styling (adjusted text color for visibility on dark image)
+# Add styling for the content box
 st.markdown("""
     <style>
     .content-box {
-        background-color: rgba(0, 0, 0, 0);  /* Transparent box */
+        background-color: rgba(255, 255, 255, 0.1);
         padding: 2rem;
         border-radius: 15px;
-        color: #ffffff;
+        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
         max-width: 800px;
         margin: 3rem auto;
+        color: black !important;
     }
 
     @media (max-width: 768px) {
@@ -52,28 +53,11 @@ st.markdown("""
 
     .content-box h1, .content-box h2, .content-box h3, .content-box p, .content-box div {
         text-align: center !important;
-        color: #f0f0f0 !important;
+        color: black !important;
     }
 
-    label, .st-bb, .st-c3 {
-        color: #ffffff !important;
-    }
-
-    .stNumberInput > div > input {
-        background-color: rgba(255,255,255,0.2);
-        color: white;
-    }
-
-    .stButton > button {
-        background-color: #28a745;
-        color: white;
-        font-weight: bold;
-        border-radius: 10px;
-        padding: 10px 20px;
-    }
-
-    .stButton > button:hover {
-        background-color: #218838;
+    label, input, .stNumberInput, .stButton > button {
+        color: black !important;
     }
     </style>
 """, unsafe_allow_html=True)
