@@ -49,13 +49,14 @@ st.markdown("""
         border-radius: 15px;
         max-width: 800px;
         margin: 2rem auto 1rem auto;
+        background-color: rgba(0, 0, 0, 0.6);
         z-index: 1;
         position: relative;
     }
     .content-box h1, .content-box h2, .content-box h3, .content-box p, .content-box div {
         text-align: center !important;
         color: white !important;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+        text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.9);
     }
     input[type="number"], .stNumberInput input {
         color: black !important;
