@@ -1,68 +1,60 @@
 import streamlit as st
+import numpy as np
+import pickle
+
+# Load model
+model = pickle.load(open("crop_model.pkl", "rb"))
 
 # Set page config
-st.set_page_config(page_title="Crop Prediction", layout="centered")
+st.set_page_config(page_title="Crop Recommendation", layout="centered")
 
-# Apply custom CSS for background and form styling
-st.markdown("""
+# Inject custom CSS
+st.markdown(
+    """
     <style>
-        /* Fullscreen background image */
-        body {
-            background-image: url('https://i.ibb.co/hyCHDk1/plant-bg.jpg');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-        }
-
-        /* Hide Streamlit default menu and footer */
-        #MainMenu, footer, header {visibility: hidden;}
-
-        /* Center form container */
-        .form-container {
-            background: rgba(255, 255, 255, 0.8);
-            padding: 2rem;
-            border-radius: 20px;
-            max-width: 400px;
-            margin: 8% auto;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-        }
-
-        .form-container h2 {
-            text-align: center;
-            color: #2E7D32;
-            font-size: 28px;
-            margin-bottom: 20px;
-        }
-
-        .stButton > button {
-            background-color: #4CAF50;
-            color: white;
-            border-radius: 20px;
-            padding: 0.5em 2em;
-            border: none;
-        }
-
-        .stButton > button:hover {
-            background-color: #388E3C;
-        }
+    .stApp {
+        background-image: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    .main-card {
+        background-color: rgba(255, 255, 255, 0.85);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    h1 {
+        text-align: center;
+        color: #2E7D32;
+    }
+    .css-1aumxhk {
+        background-color: transparent;
+    }
     </style>
-""", unsafe_allow_html=True)
+    """,
+    unsafe_allow_html=True
+)
 
-# Use HTML block for form styling
-st.markdown('<div class="form-container"><h2>Crop Prediction</h2>', unsafe_allow_html=True)
+# UI Content
+st.markdown("<h1>🌿 Crop Recommendation System</h1>", unsafe_allow_html=True)
+with st.container():
+    with st.form("crop_form"):
+        st.markdown('<div class="main-card">', unsafe_allow_html=True)
 
-# Input fields
-nitrogen = st.text_input("Nitrogen (N)")
-phosphorus = st.text_input("Phosphorus (P)")
-potassium = st.text_input("Potassium (K)")
-temperature = st.text_input("Temperature (°C)")
-humidity = st.text_input("Humidity (%)")
-ph = st.text_input("pH Level")
-rainfall = st.text_input("Rainfall (mm)")
+        N = st.number_input("Nitrogen (N)", min_value=0, max_value=200, value=50)
+        P = st.number_input("Phosphorus (P)", min_value=0, max_value=200, value=50)
+        K = st.number_input("Potassium (K)", min_value=0, max_value=200, value=50)
+        temperature = st.number_input("Temperature (°C)", min_value=0.0, max_value=50.0, value=25.0)
+        humidity = st.number_input("Humidity (%)", min_value=0.0, max_value=100.0, value=50.0)
+        ph = st.number_input("pH", min_value=0.0, max_value=14.0, value=6.5)
+        rainfall = st.number_input("Rainfall (mm)", min_value=0.0, max_value=300.0, value=100.0)
 
-# Predict button
-if st.button("Predict"):
-    st.success("✅ Your predicted crop is: Wheat 🌾")
+        submitted = st.form_submit_button("🔍 Predict Crop")
 
-# End HTML block
-st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        if submitted:
+            input_data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
+            prediction = model.predict(input_data)[0]
+            st.success(f"✅ Recommended Crop: **{prediction}**")
