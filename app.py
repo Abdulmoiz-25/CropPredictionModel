@@ -1,78 +1,65 @@
 import streamlit as st
-import base64
-import numpy as np
-import pandas as pd
 import pickle
+import numpy as np
 
-# Load your model
-model = pickle.load(open('crop_prediction_model.pkl', 'rb'))
+# Load the model
+model = pickle.load(open('crop_model.pkl', 'rb'))
 
 # Set page config
-st.set_page_config(page_title="🌾 Crop Prediction App", layout="centered")
+st.set_page_config(layout="wide")
 
-# Function to add a blurred background image
-def add_bg():
-    st.markdown("""
+# Set custom CSS for background and content box
+def add_bg_and_style():
+    st.markdown(
+        f"""
         <style>
-        .stApp {
-            background-image: url("https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2");
+        .stApp {{
+            background-image: url('https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1500&q=80');
             background-size: cover;
             background-position: center;
-            backdrop-filter: blur(6px);
-        }
+            filter: blur(0px);
+        }}
+        .content-box {{
+            background-color: rgba(255, 255, 255, 0.85);
+            padding: 2rem;
+            margin: 2rem auto;
+            border-radius: 15px;
+            max-width: 700px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }}
+        @media (max-width: 768px) {{
+            .content-box {{
+                padding: 1.5rem;
+                margin: 1rem;
+            }}
+        }}
         </style>
-    """, unsafe_allow_html=True)
+        """,
+        unsafe_allow_html=True
+    )
 
-add_bg()
+# Call the function
+add_bg_and_style()
 
-# Add styling for the content box
-st.markdown("""
-    <style>
-    .content-box {
-        background-color: white;
-        padding: 2rem;
-        border-radius: 15px;
-        box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
-        max-width: 800px;
-        margin: 3rem auto;
-    }
+# Main UI inside a styled div
+st.markdown("<div class='content-box'>", unsafe_allow_html=True)
 
-    @media (max-width: 768px) {
-        .content-box {
-            padding: 1.2rem;
-            margin: 1rem;
-        }
-    }
-
-    .content-box h1, .content-box h2, .content-box h3, .content-box p, .content-box div {
-        text-align: center !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
-# Start content box
-st.markdown('<div class="content-box">', unsafe_allow_html=True)
-
-# App title and intro
 st.title("🌾 Crop Prediction App")
-st.markdown("Predict the most suitable crop based on soil and weather conditions.")
+st.markdown("Enter the following soil and environmental conditions to predict the most suitable crop:")
 
 # Input fields
-st.subheader("📋 Enter the following parameters:")
-
-N = st.number_input("Nitrogen (N)", min_value=0.0, step=1.0)
-P = st.number_input("Phosphorus (P)", min_value=0.0, step=1.0)
-K = st.number_input("Potassium (K)", min_value=0.0, step=1.0)
-temperature = st.number_input("Temperature (°C)", min_value=0.0, step=0.1)
-humidity = st.number_input("Humidity (%)", min_value=0.0, step=0.1)
-ph = st.number_input("Soil pH", min_value=0.0, step=0.1)
-rainfall = st.number_input("Rainfall (mm)", min_value=0.0, step=0.1)
+N = st.number_input("Nitrogen (N)", min_value=0)
+P = st.number_input("Phosphorus (P)", min_value=0)
+K = st.number_input("Potassium (K)", min_value=0)
+temperature = st.number_input("Temperature (°C)")
+humidity = st.number_input("Humidity (%)")
+ph = st.number_input("pH value")
+rainfall = st.number_input("Rainfall (mm)")
 
 # Prediction
-if st.button("🌿 Predict Crop"):
+if st.button("Predict Crop"):
     input_data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
     prediction = model.predict(input_data)
-    st.success(f"✅ Recommended Crop: **{prediction[0]}**")
+    st.success(f"🌱 The recommended crop to grow is: **{prediction[0].capitalize()}**")
 
-# End content box
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
