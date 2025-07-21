@@ -2,67 +2,71 @@ import streamlit as st
 import pickle
 import numpy as np
 
-# Load the trained model
+# Load model
 model = pickle.load(open("crop_model.pkl", "rb"))
 
-# Set Streamlit page config
-st.set_page_config(page_title="Crop Recommendation", layout="centered")
+# Page config
+st.set_page_config(page_title="Crop Recommender", layout="centered")
 
-# Apply full-page background with reliable method (overlay via CSS on .stApp)
+# 🧑‍🎨 Custom CSS for full fixes
 st.markdown("""
     <style>
-    .stApp {
-        background: url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&w=1400&q=80");
+    html, body, .stApp {
+        height: 100%;
+        background-image: url("https://images.unsplash.com/photo-1501004318641-b39e6451bec6");
         background-size: cover;
         background-position: center;
-        background-repeat: no-repeat;
         background-attachment: fixed;
     }
-    .form-container {
+
+    .form-box {
         background-color: rgba(255, 255, 255, 0.9);
-        padding: 2.5rem 2rem;
-        border-radius: 20px;
+        padding: 2rem;
+        border-radius: 16px;
+        width: 100%;
         max-width: 500px;
         margin: 5% auto;
-        box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
     }
+
     .title {
         text-align: center;
         font-size: 32px;
-        font-weight: bold;
-        color: #2e7d32;
-        margin-bottom: 1.5rem;
+        font-weight: 700;
+        color: #2E7D32;
+        margin-bottom: 1rem;
     }
+
     .stButton>button {
-        background-color: #2e7d32;
+        background-color: #2E7D32;
         color: white;
         font-size: 16px;
-        padding: 0.5rem 1rem;
+        font-weight: 600;
+        padding: 0.6em 1.5em;
         border-radius: 8px;
-        border: none;
-        transition: background-color 0.3s ease;
+        width: 100%;
+        margin-top: 10px;
     }
-    .stButton>button:hover {
-        background-color: #1b5e20;
-    }
+
+    footer {visibility: hidden;}
     </style>
 """, unsafe_allow_html=True)
 
-# Start layout
-st.markdown('<div class="form-container">', unsafe_allow_html=True)
-st.markdown('<div class="title">🌿 Crop Recommendation System</div>', unsafe_allow_html=True)
+# 🌿 UI Box
+st.markdown('<div class="form-box">', unsafe_allow_html=True)
+st.markdown('<div class="title">🌾 Crop Recommendation</div>', unsafe_allow_html=True)
 
-# Inputs with +/– controls
-N = st.number_input("Nitrogen (N)", min_value=0.0, step=1.0)
-P = st.number_input("Phosphorus (P)", min_value=0.0, step=1.0)
-K = st.number_input("Potassium (K)", min_value=0.0, step=1.0)
-temperature = st.number_input("Temperature (°C)", min_value=0.0, step=0.1)
-humidity = st.number_input("Humidity (%)", min_value=0.0, step=0.1)
-ph = st.number_input("pH Level", min_value=0.0, max_value=14.0, step=0.1)
-rainfall = st.number_input("Rainfall (mm)", min_value=0.0, step=0.1)
+# Number Inputs
+N = st.number_input("Nitrogen (N)", min_value=0.0, max_value=150.0, value=50.0, step=1.0)
+P = st.number_input("Phosphorus (P)", min_value=0.0, max_value=150.0, value=50.0, step=1.0)
+K = st.number_input("Potassium (K)", min_value=0.0, max_value=150.0, value=50.0, step=1.0)
+temperature = st.number_input("Temperature (°C)", min_value=0.0, max_value=50.0, value=25.0, step=0.5)
+humidity = st.number_input("Humidity (%)", min_value=0.0, max_value=100.0, value=60.0, step=0.5)
+ph = st.number_input("pH Level", min_value=0.0, max_value=14.0, value=6.5, step=0.1)
+rainfall = st.number_input("Rainfall (mm)", min_value=0.0, max_value=300.0, value=100.0, step=1.0)
 
-# Predict button
-if st.button("🌱 Predict Crop"):
+# Predict Button
+if st.button("🔍 Predict"):
     input_data = np.array([[N, P, K, temperature, humidity, ph, rainfall]])
     prediction = model.predict(input_data)[0]
     st.success(f"✅ Recommended Crop: **{prediction}**")
