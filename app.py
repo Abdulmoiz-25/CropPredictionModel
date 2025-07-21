@@ -10,38 +10,39 @@ model = pickle.load(open('crop_model.pkl', 'rb'))
 # Set page config
 st.set_page_config(page_title="🌾 Crop Prediction App", layout="centered")
 
-# Function to add a local background image with blur
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as file:
-        encoded = base64.b64encode(file.read()).decode()
+# Function to add a blurred background image (local file)
+def add_bg():
+    file_ = open("background.jpg", "rb")
+    contents = file_.read()
+    data_url = base64.b64encode(contents).decode("utf-8")
+    file_.close()
+    
     st.markdown(
         f"""
         <style>
         .stApp {{
-            background-image: url("data:image/jpg;base64,{encoded}");
+            background-image: url("data:image/jpg;base64,{data_url}");
             background-size: cover;
             background-position: center;
             backdrop-filter: blur(6px);
-            color: black !important;
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
 
-add_bg_from_local("background.jpg")  # Make sure this file is in the same folder
+add_bg()
 
-# Add styling for the content box
+# Style overrides
 st.markdown("""
     <style>
     .content-box {
-        background-color: rgba(255, 255, 255, 0.1);
+        background-color: rgba(255, 255, 255, 0.8);
         padding: 2rem;
         border-radius: 15px;
         box-shadow: 0 4px 25px rgba(0, 0, 0, 0.2);
         max-width: 800px;
         margin: 3rem auto;
-        color: black !important;
     }
 
     @media (max-width: 768px) {
@@ -56,8 +57,12 @@ st.markdown("""
         color: black !important;
     }
 
-    label, input, .stNumberInput, .stButton > button {
-        color: black !important;
+    input[type=number] {
+        color: white !important;
+    }
+
+    button[kind="primary"] > div {
+        color: white !important;
     }
     </style>
 """, unsafe_allow_html=True)
