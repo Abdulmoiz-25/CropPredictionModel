@@ -49,6 +49,7 @@ st.markdown("""
         max-width: 800px;
         margin: 2rem auto 1rem auto;
         background-color: rgba(255, 255, 255, 0.85);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
     }
 
     @media (max-width: 768px) {
@@ -63,13 +64,9 @@ st.markdown("""
         color: black !important;
     }
 
-    input[type="number"] {
+    label, input, .stNumberInput, .stButton button {{
         color: black !important;
-    }
-
-    button[kind="primary"] {
-        color: white !important;
-    }
+    }}
 
     .block-container {
         padding-top: 1rem !important;
