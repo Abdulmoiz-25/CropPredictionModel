@@ -6,7 +6,7 @@ A machine learning model that predicts the **most suitable crop to grow** based 
 
 ## 📽️ Demo
 
-- ▶️ **YouTube Video**: [Watch Now](https://youtu.be/ud1yQbr9MZs)  
+- ▶️ **YouTube Video**: [Watch Now]([https://youtu.be/ud1yQbr9MZs](https://youtu.be/xB0-W7MdBtk?si=rF2yRFDB6VstpotD))  
 - 🌐 **Web App**: [Try the Streamlit App](https://croppredictionmodel-gyoyh5nz6pybyf4naqja4i.streamlit.app/)
 
 ---
@@ -100,7 +100,7 @@ Key visualizations include:
 ## 🔗 Important Links
 
 - 📂 **GitHub Repo:** [CropPredictionModel](https://github.com/Abdulmoiz-25/CropPredictionModel.git)  
-- ▶️ **YouTube Demo:** [Watch here](https://youtu.be/ud1yQbr9MZs)  
+- ▶️ **YouTube Demo:** [Watch here]([https://youtu.be/ud1yQbr9MZs](https://youtu.be/xB0-W7MdBtk?si=rF2yRFDB6VstpotD))  
 - 🌐 **Streamlit App:** [Try Now](https://croppredictionmodel-gyoyh5nz6pybyf4naqja4i.streamlit.app/)
 
 ---
