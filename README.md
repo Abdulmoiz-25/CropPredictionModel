@@ -97,19 +97,6 @@ Key visualizations include:
 
 ---
 
-## 🚀 How to Run Locally
-
-```bash
-# Clone the repo
-git clone https://github.com/Abdulmoiz-25/CropPredictionModel.git
-
-# Navigate into the project directory
-cd CropPredictionModel
-
-# Run Jupyter Notebook
-jupyter notebook
-
-
 ## 🔗 Important Links
 
 - 📂 **GitHub Repo:** [CropPredictionModel](https://github.com/Abdulmoiz-25/CropPredictionModel.git)  
@@ -125,3 +112,20 @@ jupyter notebook
 - [Matplotlib](https://matplotlib.org/)  
 - [Seaborn](https://seaborn.pydata.org/)  
 - [Original Dataset – Kaggle](https://www.kaggle.com/datasets/atharvaingle/crop-recommendation-dataset)
+
+---
+
+## 🚀 How to Run Locally
+
+```bash
+# Clone the repo
+git clone https://github.com/Abdulmoiz-25/CropPredictionModel.git
+
+# Navigate into the project directory
+cd CropPredictionModel
+
+# Run Jupyter Notebook
+jupyter notebook
+
+
+
