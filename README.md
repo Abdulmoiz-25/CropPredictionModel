@@ -7,8 +7,8 @@ A machine learning model that predicts the **most suitable crop to grow** based 
 
 ## 📽️ Demo
 
-- ▶️ **YouTube Video**: [Watch Now](https://youtu.be/your-demo-link)  
-- 🌐 **Web App**: [Try the Streamlit App](https://your-streamlit-app-link)
+- ▶️ **YouTube Video**: [Watch Now](https://youtu.be/xB0-W7MdBtk?si=QzikSxQTzXjNiHv9)  
+- 🌐 **Web App**: [Try the Streamlit App](https://croppredictionmodel-gyoyh5nz6pybyf4naqja4i.streamlit.app/)
 
 ---
 
@@ -72,8 +72,6 @@ This project predicts the optimal crop for cultivation using a complete ML workf
 
 ✅ **Models Trained:**
 
-- Logistic Regression  
-- Decision Tree  
 - Random Forest
 
 📈 **Evaluation Metrics:**
@@ -89,7 +87,7 @@ This project predicts the optimal crop for cultivation using a complete ML workf
 
 - Achieved high accuracy on test data
 - Robust to feature noise
-- Saved as `crop_model.pkl`
+
 
 ---
 
@@ -104,9 +102,9 @@ This project predicts the optimal crop for cultivation using a complete ML workf
 
 ## 🔗 Important Links
 
-- 📂 **GitHub Repo**: [CropPredictionModel](https://github.com/your-repo-link)  
-- ▶️ **YouTube Demo**: [Watch here](https://youtu.be/your-demo-link)  
-- 🌐 **Streamlit App**: [Try Now](https://your-streamlit-app-link)
+- 📂 **GitHub Repo**: [CropPredictionModel](https://github.com/Abdulmoiz-25/CropPredictionModel.git)  
+- ▶️ **YouTube Demo**: [Watch here](https://youtu.be/xB0-W7MdBtk?si=QzikSxQTzXjNiHv9)  
+- 🌐 **Streamlit App**: [Try Now](https://croppredictionmodel-gyoyh5nz6pybyf4naqja4i.streamlit.app/)
 
 ---
 
